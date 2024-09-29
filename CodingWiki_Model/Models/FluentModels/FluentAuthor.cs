@@ -12,7 +12,7 @@ namespace CodingWiki_Model.Models.FluentModels
         public string Location { get; set; }
         [NotMapped] public string FullName => $"{FirstName} {LastName}";
 
-        public List<FluentBook> Books { get; set; }
-        //public List<FluentBookAuthorMap> BookAuthors { get; set; }
+        //public List<FluentBook> Books { get; set; }
+        public List<FluentBookAuthorMap> BookAuthorMap { get; set; }
     }
 }

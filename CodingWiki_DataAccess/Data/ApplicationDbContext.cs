@@ -53,6 +53,12 @@ namespace CodingWiki_DataAccess.Data
             modelBuilder.Entity<FluentPublisher>().HasKey(x => x.PublisherId);
             modelBuilder.Entity<FluentPublisher>().Property(x => x.Name).IsRequired();
 
+            modelBuilder.Entity<FluentBookAuthorMap>().HasKey(x => new { x.AuthorId, x.BookId });
+            modelBuilder.Entity<FluentBookAuthorMap>().HasOne(x => x.Author).WithMany(x => x.BookAuthorMap)
+                .HasForeignKey(x => x.AuthorId);
+            modelBuilder.Entity<FluentBookAuthorMap>().HasOne(x => x.Book).WithMany(x => x.BookAuthorMap)
+                .HasForeignKey(x => x.BookId);
+
             modelBuilder.Entity<Book>().Property(x => x.Price).HasPrecision(10, 5);
 
             modelBuilder.Entity<BookAuthorMap>().HasKey(x => new { x.AuthorId, x.BookId });
