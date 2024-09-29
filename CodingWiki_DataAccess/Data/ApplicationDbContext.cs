@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CodingWiki_Model.Models;
+using CodingWiki_Model.Models.FluentModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodingWiki_DataAccess.Data
@@ -16,6 +17,7 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<BookDetail> BookDetails { get; set; }
+        public DbSet<FluentBookDetail> BookDetailsFluent { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,6 +28,9 @@ namespace CodingWiki_DataAccess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<FluentBookDetail>().ToTable("FluentBookDetail");
+            modelBuilder.Entity<FluentBookDetail>().Property(x => x.NumberOfChapters).HasColumnName("NoOfChapters");
+
             modelBuilder.Entity<Book>().Property(x => x.Price).HasPrecision(10, 5);
 
             modelBuilder.Entity<BookAuthorMap>().HasKey(x => new { x.AuthorId, x.BookId });

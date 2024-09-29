@@ -19,7 +19,7 @@ namespace CodingWiki_Model.Models
         [NotMapped]
         public string PriceRange { get; set; }
         public BookDetail BookDetail { get; set; }
-        [ForeignKey("FluentPublisher")]
+        [ForeignKey("Publisher")]
         public int Publisher_Id { get; set; }
         public Publisher Publisher { get; set; }
         public List<BookAuthorMap> BookAuthors { get; set; }
