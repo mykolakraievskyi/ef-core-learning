@@ -4,6 +4,7 @@ using CodingWiki_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingWiki_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240926130940_newTables")]
+    partial class newTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,28 +25,13 @@ namespace CodingWiki_DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AuthorBook", b =>
-                {
-                    b.Property<int>("AuthorsAuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BooksBookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AuthorsAuthorId", "BooksBookId");
-
-                    b.HasIndex("BooksBookId");
-
-                    b.ToTable("AuthorBook");
-                });
-
             modelBuilder.Entity("CodingWiki_Model.Models.Author", b =>
                 {
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("Author_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Author_Id"));
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
@@ -53,14 +41,13 @@ namespace CodingWiki_DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LastName")
+                        .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AuthorId");
+                    b.HasKey("Author_Id");
 
                     b.ToTable("Authors");
                 });
@@ -82,15 +69,10 @@ namespace CodingWiki_DataAccess.Migrations
                         .HasPrecision(10, 5)
                         .HasColumnType("decimal(10,5)");
 
-                    b.Property<int>("Publisher_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BookId");
-
-                    b.HasIndex("Publisher_Id");
 
                     b.ToTable("Books");
 
@@ -100,7 +82,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 1,
                             ISBN = "978-0-316-76948-0",
                             Price = 9.99m,
-                            Publisher_Id = 1,
                             Title = "The Catcher in the Rye"
                         },
                         new
@@ -108,7 +89,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 2,
                             ISBN = "978-0-452-28423-4",
                             Price = 14.99m,
-                            Publisher_Id = 2,
                             Title = "1984"
                         },
                         new
@@ -116,7 +96,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 3,
                             ISBN = "978-0-06-112008-4",
                             Price = 18.99m,
-                            Publisher_Id = 3,
                             Title = "To Kill a Mockingbird"
                         },
                         new
@@ -124,7 +103,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 4,
                             ISBN = "978-0-7432-7356-5",
                             Price = 10.99m,
-                            Publisher_Id = 1,
                             Title = "The Great Gatsby"
                         },
                         new
@@ -132,37 +110,8 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 5,
                             ISBN = "978-0-14-243724-7",
                             Price = 12.99m,
-                            Publisher_Id = 2,
                             Title = "Moby Dick"
                         });
-                });
-
-            modelBuilder.Entity("CodingWiki_Model.Models.BookDetail", b =>
-                {
-                    b.Property<int>("BookDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookDetailId"));
-
-                    b.Property<int>("Book_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfChapters")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfPages")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Weight")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BookDetailId");
-
-                    b.HasIndex("Book_Id")
-                        .IsUnique();
-
-                    b.ToTable("BookDetails");
                 });
 
             modelBuilder.Entity("CodingWiki_Model.Models.Category", b =>
@@ -185,11 +134,11 @@ namespace CodingWiki_DataAccess.Migrations
 
             modelBuilder.Entity("CodingWiki_Model.Models.Publisher", b =>
                 {
-                    b.Property<int>("PublisherId")
+                    b.Property<int>("Publisher_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PublisherId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Publisher_Id"));
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
@@ -198,88 +147,26 @@ namespace CodingWiki_DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PublisherId");
+                    b.HasKey("Publisher_Id");
 
                     b.ToTable("Publishers");
-
-                    b.HasData(
-                        new
-                        {
-                            PublisherId = 1,
-                            Location = "New York",
-                            Name = "Penguin Random House"
-                        },
-                        new
-                        {
-                            PublisherId = 2,
-                            Location = "London",
-                            Name = "HarperCollins"
-                        },
-                        new
-                        {
-                            PublisherId = 3,
-                            Location = "Manchester",
-                            Name = "Macmillan Publishers"
-                        });
                 });
 
             modelBuilder.Entity("CodingWiki_Model.Models.SubCategory", b =>
                 {
-                    b.Property<int>("SubCategoryId")
+                    b.Property<int>("SubCategory_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubCategoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubCategory_Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SubCategoryId");
+                    b.HasKey("SubCategory_Id");
 
                     b.ToTable("SubCategories");
-                });
-
-            modelBuilder.Entity("AuthorBook", b =>
-                {
-                    b.HasOne("CodingWiki_Model.Models.Author", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorsAuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CodingWiki_Model.Models.Book", null)
-                        .WithMany()
-                        .HasForeignKey("BooksBookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CodingWiki_Model.Models.Book", b =>
-                {
-                    b.HasOne("CodingWiki_Model.Models.Publisher", "Publisher")
-                        .WithMany()
-                        .HasForeignKey("Publisher_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Publisher");
-                });
-
-            modelBuilder.Entity("CodingWiki_Model.Models.BookDetail", b =>
-                {
-                    b.HasOne("CodingWiki_Model.Models.Book", "Book")
-                        .WithOne("BookDetail")
-                        .HasForeignKey("CodingWiki_Model.Models.BookDetail", "Book_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("CodingWiki_Model.Models.Book", b =>
-                {
-                    b.Navigation("BookDetail");
                 });
 #pragma warning restore 612, 618
         }

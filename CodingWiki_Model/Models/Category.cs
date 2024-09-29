@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodingWiki_Model_.Models
+namespace CodingWiki_Model.Models
 {
     [Table("Categories")]
     public class Category
