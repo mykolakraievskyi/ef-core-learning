@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CodingWiki_Model.Models
+namespace CodingWiki_Model.Models.FluentModels
 {
-    public class Publisher
+    public class FluentPublisher
     {
         [Key]
         public int PublisherId { get; set; }
@@ -10,7 +10,6 @@ namespace CodingWiki_Model.Models
         public string Name { get; set; }
         public string Location { get; set; }
 
-        public List<Book> Books { get; set; }
-
+        public List<FluentBook> Books { get; set; }
     }
 }

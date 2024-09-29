@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CodingWiki_Model.Models
+namespace CodingWiki_Model.Models.FluentModels
 {
-    public class Author
+    public class FluentAuthor
     {
         [Key]
         public int AuthorId { get; set; }
@@ -20,6 +15,6 @@ namespace CodingWiki_Model.Models
         public DateTime BirthDate { get; set; }
         public string Location { get; set; }
         [NotMapped] public string FullName => $"{FirstName} {LastName}";
-        public List<BookAuthorMap> BookAuthors { get; set; }
+        //public List<FluentBookAuthorMap> BookAuthors { get; set; }
     }
 }
