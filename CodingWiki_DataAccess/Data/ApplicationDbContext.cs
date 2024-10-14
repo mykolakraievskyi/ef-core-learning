@@ -2,6 +2,7 @@
 using CodingWiki_Model.Models;
 using CodingWiki_Model.Models.FluentModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CodingWiki_DataAccess.Data
 {
@@ -20,10 +21,16 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<FluentPublisher> FluentPublishers { get; set; }
         public DbSet<FluentBookAuthorMap> FluentBookAuthorMaps { get; set; }
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // temporary
-            optionsBuilder.UseSqlServer("Server=localhost;Database=CodingWiki;TrustServerCertificate=true;Trusted_Connection=true;");
+            // const string connectionString =
+            //     "Server=localhost;Database=CodingWiki;TrustServerCertificate=true;Trusted_Connection=true;";
+            // optionsBuilder.UseSqlServer(connectionString).LogTo(Console.WriteLine, new[] {DbLoggerCategory.Database.Command.Name}, LogLevel.Information);
             base.OnConfiguring(optionsBuilder);
         }
 
